@@ -1,7 +1,6 @@
 import os
 from enum import Enum
 from termcolor import colored
-from colorama import init, Fore, Back, Style
 
 
 class Player(Enum):
