@@ -1,3 +1,3 @@
 @Echo off
 
-py Puissance4.py
+py PySance 4.py
