@@ -96,6 +96,9 @@ class NewGame:
                 lstGD.append(self.matrix_game[row][col])
 
             result = ''.join(str(x) for x in lstGD)
+
+            idxCol = result.find(f"{self.player_turn.value}" * self.tokenWin)
+            indexWin = [[idxCol + i, col] for i in range(self.tokenWin)]
             check(result)
 
         # check diagoCol
