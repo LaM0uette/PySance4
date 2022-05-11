@@ -125,7 +125,7 @@ class NewGame:
 
             result = ''.join(str(x) for x in lst[0])
             idxCol = result.find(f"{self.player_turn.value}" * self.tokenWin)
-            indexWin = [[row + i, idxCol + i] for i in range(self.tokenWin)]
+            indexWin = [[row + idxCol + i, idxCol + i] for i in range(self.tokenWin)]
             check(result)
 
             if not self.run: break
@@ -140,10 +140,18 @@ class NewGame:
                 lst[1].append(self.matrix_game[self.sizeGame-1 - colInv][self.sizeGame-1 - rowInc])
                 rowInc += 1
 
-            check(''.join(str(x) for x in lst[0]))
+            Inv = self.sizeGame - 1
+
+            result = ''.join(str(x) for x in lst[1])
+            idxCol = result.find(f"{self.player_turn.value}" * self.tokenWin)
+            indexWin = [[idxCol + i, (Inv-(row + idxCol)) - i] for i in range(self.tokenWin)]
+            check(result)
             if not self.run: break
 
-            check(''.join(str(x) for x in lst[1]))
+            result = ''.join(str(x) for x in lst[0])
+            idxCol = result.find(f"{self.player_turn.value}" * self.tokenWin)
+            indexWin = [[row + idxCol + i, (Inv-idxCol) - i] for i in range(self.tokenWin)]
+            check(result)
             if not self.run: break
 
 
@@ -163,6 +171,10 @@ class NewGame:
 
     def start(self):
         while self.run:
+            self.matrix_game[0][3] = 1
+            self.matrix_game[1][4] = 1
+            self.matrix_game[2][5] = 1
+
             self.draw_game()
 
             input_player = input(f"Entrez le numéro d'une colonne (1 - {self.sizeGame}) : ")
