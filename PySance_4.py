@@ -40,7 +40,7 @@ class NewGame:
                     {lstIndex}""")
 
         for i in range(self.sizeGame):
-            print(f"""                   {''.join(f"[{colored('O', 'yellow') if x == 1 else colored('X', 'red') if x == 2 else ' '}]" for x in self.matrix_game[i])}""")
+            print(f"""                   {''.join(f"[{colored('O', 'yellow') if x == 1 else colored('X', 'red') if x == 2 else colored('O', 'green') if x == 3 else colored('X', 'green') if x == 6 else ' '}]" for x in self.matrix_game[i])}""")
 
         print("""
         """)
@@ -69,16 +69,28 @@ class NewGame:
         self.player_turn = Player.P2 if self.player_turn == Player.P1 else Player.P1
 
     def check_win(self):
-        def check(result):
+        def check(result, row=0):
             if f"{self.player_turn.value}"*self.tokenWin in result:
+                idxCol = result.find(f"{self.player_turn.value}" * self.tokenWin)
+
+                for i in range(self.tokenWin):
+                    indexWin.append([row, idxCol + i])
+
+                for i in range(self.tokenWin):
+                    self.matrix_game[indexWin[i][0]][indexWin[i][1]] = self.player_turn.value*3
+
                 self.run = False
                 self.draw_game()
                 self.draw_end(f"{self.player_turn.name} gagne la partie !")
 
+        indexWin = []
+
         # check row
         for row in range(self.sizeGame):
             result = "".join(str(x) for x in self.matrix_game[row])
-            check(result)
+
+            check(result, row)
+            if not self.run: break
 
         # check column
         for col in range(self.sizeGame):
