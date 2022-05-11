@@ -116,16 +116,16 @@ class NewGame:
                 lst[1].append(self.matrix_game[col][rowInc])
                 rowInc += 1
 
-            result = ''.join(str(x) for x in lst[0])
+            result = ''.join(str(x) for x in lst[1])
             idxCol = result.find(f"{self.player_turn.value}" * self.tokenWin)
-            indexWin = [[row + i, idxCol + i] for i in range(self.tokenWin)]
+            indexWin = [[idxCol + i, row + idxCol + i] for i in range(self.tokenWin)]
             check(result)
 
             if not self.run: break
 
-            result = ''.join(str(x) for x in lst[1])
+            result = ''.join(str(x) for x in lst[0])
             idxCol = result.find(f"{self.player_turn.value}" * self.tokenWin)
-            indexWin = [[idxCol + i, idxCol + i + row] for i in range(self.tokenWin)]
+            indexWin = [[row + i, idxCol + i] for i in range(self.tokenWin)]
             check(result)
 
             if not self.run: break
@@ -141,7 +141,12 @@ class NewGame:
                 rowInc += 1
 
             check(''.join(str(x) for x in lst[0]))
+            if not self.run: break
+
             check(''.join(str(x) for x in lst[1]))
+            if not self.run: break
+
+
 
     def check_end(self):
         for item in self.matrix_game[0]:
