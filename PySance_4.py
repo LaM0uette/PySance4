@@ -69,12 +69,8 @@ class NewGame:
         self.player_turn = Player.P2 if self.player_turn == Player.P1 else Player.P1
 
     def check_win(self):
-        def check(result, row=0):
+        def check(result):
             if f"{self.player_turn.value}"*self.tokenWin in result:
-                idxCol = result.find(f"{self.player_turn.value}" * self.tokenWin)
-
-                for i in range(self.tokenWin):
-                    indexWin.append([row, idxCol + i])
 
                 for i in range(self.tokenWin):
                     self.matrix_game[indexWin[i][0]][indexWin[i][1]] = self.player_turn.value*3
@@ -83,13 +79,14 @@ class NewGame:
                 self.draw_game()
                 self.draw_end(f"{self.player_turn.name} gagne la partie !")
 
-        indexWin = []
-
         # check row
         for row in range(self.sizeGame):
             result = "".join(str(x) for x in self.matrix_game[row])
 
-            check(result, row)
+            idxCol = result.find(f"{self.player_turn.value}" * self.tokenWin)
+            indexWin = [[row, idxCol + i] for i in range(self.tokenWin)]
+            check(result)
+
             if not self.run: break
 
         # check column
