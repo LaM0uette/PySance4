@@ -177,10 +177,9 @@ class NewGame:
             self.add_token(token_played=input_player)
 
 run = True
-NewGame().start()
 
 while run:
-    txt = input("Voulez vous rejouer ? (o|n) (c pour custom) : ")
+    txt = input("Une partie ? (o|n) (c pour custom) : ")
 
     if txt.lower() == "o":
         NewGame().start()
