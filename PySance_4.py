@@ -176,7 +176,6 @@ class NewGame:
             input_player = input(f"Entrez le numéro d'une colonne (1 - {self.sizeGame}) : ")
             self.add_token(token_played=input_player)
 
-
 run = True
 NewGame().start()
 
