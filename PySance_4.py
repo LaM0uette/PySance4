@@ -171,10 +171,6 @@ class NewGame:
 
     def start(self):
         while self.run:
-            self.matrix_game[0][3] = 1
-            self.matrix_game[1][4] = 1
-            self.matrix_game[2][5] = 1
-
             self.draw_game()
 
             input_player = input(f"Entrez le numéro d'une colonne (1 - {self.sizeGame}) : ")
