@@ -101,11 +101,14 @@ class NewGame:
             indexWin = [[idxCol + i, col] for i in range(self.tokenWin)]
             check(result)
 
+            if not self.run: break
+
         # check diagoCol
         sizeGameUseful = self.sizeGame-3
 
         for row in range(sizeGameUseful):
             lst = [[], []]
+            indexWin = [[], []]
             rowInc = row
 
             for col in range(self.sizeGame-row):
@@ -113,8 +116,19 @@ class NewGame:
                 lst[1].append(self.matrix_game[col][rowInc])
                 rowInc += 1
 
-            check(''.join(str(x) for x in lst[0]))
-            check(''.join(str(x) for x in lst[1]))
+            result = ''.join(str(x) for x in lst[0])
+            idxCol = result.find(f"{self.player_turn.value}" * self.tokenWin)
+            indexWin = [[row + i, idxCol + i] for i in range(self.tokenWin)]
+            check(result)
+
+            if not self.run: break
+
+            result = ''.join(str(x) for x in lst[1])
+            idxCol = result.find(f"{self.player_turn.value}" * self.tokenWin)
+            indexWin = [[idxCol + i, idxCol + i + row] for i in range(self.tokenWin)]
+            check(result)
+
+            if not self.run: break
 
         for row in range(sizeGameUseful):
             lst = [[], []]
