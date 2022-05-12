@@ -40,10 +40,9 @@ class NewGame:
                     {lstIndex}""")
 
         for i in range(self.sizeGame):
-            print(f"""                   {''.join(f"[{colored('O', 'yellow') if x == 1 else colored('O', 'red') if x == 2 else colored('O', 'yellow', attrs=['underline']) if x == 3 else colored('O', 'red', attrs=['underline']) if x == 6 else ' '}]" for x in self.matrix_game[i])}""")
+            print(f"""                   {''.join(f"[{colored('O', 'yellow') if x == 1 else colored('O', 'red') if x == 2 else colored('O', 'green', attrs=['bold']) if x == 3 else colored('O', 'green', attrs=['bold']) if x == 6 else ' '}]" for x in self.matrix_game[i])}""")
 
-        print("""
-        """)
+        print("")
 
     def add_token(self, token_played):
         if not token_played.isdigit():
@@ -77,8 +76,6 @@ class NewGame:
 
                 self.run = False
                 self.draw_game()
-
-
 
                 self.draw_end(f"{self.player_turn.name} à gagné la partie !")
 
