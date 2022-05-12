@@ -35,7 +35,7 @@ class NewGame:
             lstIndex = ''.join(f"%02d " % (i + 1) for i in range(self.sizeGame))
 
         print(f"""
-    Tour: {self.player_turn.name}
+    {f"Tour: {self.player_turn.name}" if self.run else ""}
 
                     {lstIndex}""")
 
