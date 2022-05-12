@@ -1,4 +1,5 @@
 import os
+import time
 from enum import Enum
 from termcolor import colored
 
@@ -46,9 +47,11 @@ class NewGame:
     def add_token(self, token_played):
         if not token_played.isdigit():
             print("Valeur incorect !")
+            time.sleep(0.5)
             return
         if not 0 < int(token_played) < 8:
             print("Valeur incorect !")
+            time.sleep(0.5)
             return
 
         token = int(token_played) - 1
@@ -167,6 +170,8 @@ class NewGame:
                 """)
 
     def start(self):
+        os.system(f"mode con: cols={38 + (3 * self.sizeGame)} lines={7 + self.sizeGame}")
+
         while self.run:
             self.draw_game()
 
@@ -174,7 +179,6 @@ class NewGame:
             self.add_token(token_played=input_player)
 
 run = True
-os.system('mode con: cols=59 lines=15')
 
 while run:
     txt = input("Une partie ? (o|n) (c pour custom) : ")
