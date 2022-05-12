@@ -34,8 +34,7 @@ class NewGame:
         if self.sizeGame >= 10:
             lstIndex = ''.join(f"%02d " % (i + 1) for i in range(self.sizeGame))
 
-        print(f"""
-    {f"Tour: {self.player_turn.name}" if self.run else ""}
+        print(f"""{f"Tour: {self.player_turn.name}" if self.run else ""}
 
                     {lstIndex}""")
 
@@ -175,6 +174,7 @@ class NewGame:
             self.add_token(token_played=input_player)
 
 run = True
+os.system('mode con: cols=59 lines=15')
 
 while run:
     txt = input("Une partie ? (o|n) (c pour custom) : ")
