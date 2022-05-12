@@ -4,8 +4,8 @@ from termcolor import colored
 
 
 class Player(Enum):
-    P1 = 1
-    P2 = 2
+    Player_1 = 1
+    Player_2 = 2
 
 
 class NewGame:
@@ -13,7 +13,7 @@ class NewGame:
         self.run = True
         self.sizeGame = sizeGame
         self.tokenWin = tokenWin
-        self.player_turn = Player.P1
+        self.player_turn = Player.Player_1
         self.matrix_game = self.gen_matrice(val=0)
 
     def gen_matrice(self, val):
@@ -40,7 +40,7 @@ class NewGame:
                     {lstIndex}""")
 
         for i in range(self.sizeGame):
-            print(f"""                   {''.join(f"[{colored('O', 'yellow') if x == 1 else colored('O', 'red') if x == 2 else colored('O', 'green') if x == 3 else colored('O', 'magenta') if x == 6 else ' '}]" for x in self.matrix_game[i])}""")
+            print(f"""                   {''.join(f"[{colored('O', 'yellow') if x == 1 else colored('O', 'red') if x == 2 else colored('O', 'yellow', attrs=['underline']) if x == 3 else colored('O', 'red', attrs=['underline']) if x == 6 else ' '}]" for x in self.matrix_game[i])}""")
 
         print("""
         """)
@@ -66,7 +66,7 @@ class NewGame:
         self.check_win()
         self.check_end()
 
-        self.player_turn = Player.P2 if self.player_turn == Player.P1 else Player.P1
+        self.player_turn = Player.Player_2 if self.player_turn == Player.Player_1 else Player.Player_1
 
     def check_win(self):
         def check(result):
@@ -77,7 +77,10 @@ class NewGame:
 
                 self.run = False
                 self.draw_game()
-                self.draw_end(f"{self.player_turn.name} gagne la partie !")
+
+
+
+                self.draw_end(f"{self.player_turn.name} à gagné la partie !")
 
         # check row
         for row in range(self.sizeGame):
@@ -154,8 +157,6 @@ class NewGame:
             check(result)
             if not self.run: break
 
-
-
     def check_end(self):
         for item in self.matrix_game[0]:
             if item == 0:
@@ -166,8 +167,8 @@ class NewGame:
         self.draw_end("Grille pleine !")
 
     def draw_end(self, msg):
-        print(f"""Fin de partie !\n{msg}
-        """)
+        print(f"""{colored(msg, 'yellow') if self.player_turn.value == 1 else colored(msg, 'red')}
+                """)
 
     def start(self):
         while self.run:
