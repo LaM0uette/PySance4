@@ -40,7 +40,7 @@ class NewGame:
                     {lstIndex}""")
 
         for i in range(self.sizeGame):
-            print(f"""                   {''.join(f"[{colored('O', 'yellow') if x == 1 else colored('X', 'red') if x == 2 else colored('O', 'green') if x == 3 else colored('X', 'green') if x == 6 else ' '}]" for x in self.matrix_game[i])}""")
+            print(f"""                   {''.join(f"[{colored('O', 'yellow') if x == 1 else colored('O', 'red') if x == 2 else colored('O', 'green') if x == 3 else colored('O', 'magenta') if x == 6 else ' '}]" for x in self.matrix_game[i])}""")
 
         print("""
         """)
