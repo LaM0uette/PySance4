@@ -15,16 +15,16 @@ class NewGame:
         self.sizeGame = sizeGame
         self.tokenWin = tokenWin
         self.player_turn = Player.Player1
-        self.matrix_game = self.gen_matrice(val=0)
+        self.matrix_game = self.gen_matrice()
 
-    def gen_matrice(self, val):
+    def gen_matrice(self):
         lst = []
 
         for row in range(self.sizeGame):
             lst.append([])
 
             for col in range(self.sizeGame):
-                lst[row].append(val)
+                lst[row].append(0)
 
         return lst
 
