@@ -5,8 +5,8 @@ from termcolor import colored
 
 
 class Player(Enum):
-    Player_1 = 1
-    Player_2 = 2
+    Player1 = 1
+    Player2 = 2
 
 
 class NewGame:
@@ -14,7 +14,7 @@ class NewGame:
         self.run = True
         self.sizeGame = sizeGame
         self.tokenWin = tokenWin
-        self.player_turn = Player.Player_1
+        self.player_turn = Player.Player1
         self.matrix_game = self.gen_matrice(val=0)
 
     def gen_matrice(self, val):
@@ -67,7 +67,7 @@ class NewGame:
         self.check_win()
         self.check_end()
 
-        self.player_turn = Player.Player_2 if self.player_turn == Player.Player_1 else Player.Player_1
+        self.player_turn = Player.Player2 if self.player_turn == Player.Player1 else Player.Player1
 
     def check_win(self):
         def check(result):
