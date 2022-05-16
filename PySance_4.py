@@ -49,7 +49,7 @@ class NewGame:
             print("Valeur incorect !")
             time.sleep(0.5)
             return
-        if not 0 < int(token_played) < 8:
+        if not 0 < int(token_played) < self.sizeGame+1:
             print("Valeur incorect !")
             time.sleep(0.5)
             return
