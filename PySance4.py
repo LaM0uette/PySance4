@@ -69,7 +69,7 @@ class NewGame:
         for row in range(self.sizeGame):
             lst.append([])
 
-            for col in range(self.sizeGame):
+            for _ in range(self.sizeGame):
                 lst[row].append(0)
 
         return lst
@@ -91,29 +91,30 @@ class NewGame:
         else:
             return
 
-        self.check_win()
+        self.check_all_win()
         self.check_end()
         self.switch_player()
+        
+    def win_rgb(self, index_win):
+        for i in range(self.tokenWin):
+            row, col = index_win[i][0], index_win[i][1]
+            self.matrix_game[row][col] = self.player_turn.value * 3
+        
+    def check_win(self, result, index_win):
+        if f"{self.player_turn.value}" * self.tokenWin in result:
+            self.win_rgb(index_win)
+            self.run = False
+            self.draw_game()
+            self.draw_rgb(f"{self.player_turn.name} à gagné la partie !")
 
-    def check_win(self):
-        def check(result):
-            if f"{self.player_turn.value}"*self.tokenWin in result:
-
-                for i in range(self.tokenWin):
-                    self.matrix_game[indexWin[i][0]][indexWin[i][1]] = self.player_turn.value*3
-
-                self.run = False
-                self.draw_game()
-
-                self.draw_rgb(f"{self.player_turn.name} à gagné la partie !")
-
+    def check_all_win(self):
         # check row
         for row in range(self.sizeGame):
             result = "".join(str(x) for x in self.matrix_game[row])
 
             idxCol = result.find(f"{self.player_turn.value}" * self.tokenWin)
-            indexWin = [[row, idxCol + i] for i in range(self.tokenWin)]
-            check(result)
+            index_win = [[row, idxCol + i] for i in range(self.tokenWin)]
+            self.check_win(result, index_win)
 
             if not self.run: break
 
@@ -126,8 +127,8 @@ class NewGame:
             result = ''.join(str(x) for x in lstGD)
 
             idxCol = result.find(f"{self.player_turn.value}" * self.tokenWin)
-            indexWin = [[idxCol + i, col] for i in range(self.tokenWin)]
-            check(result)
+            index_win = [[idxCol + i, col] for i in range(self.tokenWin)]
+            self.check_win(result, index_win)
 
             if not self.run: break
 
@@ -136,7 +137,7 @@ class NewGame:
 
         for row in range(sizeGameUseful):
             lst = [[], []]
-            indexWin = [[], []]
+            index_win = [[], []]
             rowInc = row
 
             for col in range(self.sizeGame-row):
@@ -146,15 +147,15 @@ class NewGame:
 
             result = ''.join(str(x) for x in lst[1])
             idxCol = result.find(f"{self.player_turn.value}" * self.tokenWin)
-            indexWin = [[idxCol + i, row + idxCol + i] for i in range(self.tokenWin)]
-            check(result)
+            index_win = [[idxCol + i, row + idxCol + i] for i in range(self.tokenWin)]
+            self.check_win(result, index_win)
 
             if not self.run: break
 
             result = ''.join(str(x) for x in lst[0])
             idxCol = result.find(f"{self.player_turn.value}" * self.tokenWin)
-            indexWin = [[row + idxCol + i, idxCol + i] for i in range(self.tokenWin)]
-            check(result)
+            index_win = [[row + idxCol + i, idxCol + i] for i in range(self.tokenWin)]
+            self.check_win(result, index_win)
 
             if not self.run: break
 
@@ -172,14 +173,14 @@ class NewGame:
 
             result = ''.join(str(x) for x in lst[1])
             idxCol = result.find(f"{self.player_turn.value}" * self.tokenWin)
-            indexWin = [[idxCol + i, (Inv-(row + idxCol)) - i] for i in range(self.tokenWin)]
-            check(result)
+            index_win = [[idxCol + i, (Inv-(row + idxCol)) - i] for i in range(self.tokenWin)]
+            self.check_win(result, index_win)
             if not self.run: break
 
             result = ''.join(str(x) for x in lst[0])
             idxCol = result.find(f"{self.player_turn.value}" * self.tokenWin)
-            indexWin = [[row + idxCol + i, (Inv-idxCol) - i] for i in range(self.tokenWin)]
-            check(result)
+            index_win = [[row + idxCol + i, (Inv-idxCol) - i] for i in range(self.tokenWin)]
+            self.check_win(result, index_win)
             if not self.run: break
 
     def check_end(self):
