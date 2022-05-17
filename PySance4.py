@@ -26,9 +26,9 @@ class NewGame:
     def draw_player_turn(self):
         header = self.get_header_numbers()
 
-        txt = f"Tour: {self.player_turn.name}" if self.run else ""
+        txt = self.player_turn.name if self.run else ""
+        self.draw_rgb(txt)
 
-        print(txt)
         print(f"\t\t\t{header}")
 
     def draw_matrix_game(self):
@@ -51,12 +51,17 @@ class NewGame:
                 row_txt += f"[{token_rgb}]"
 
             print(f"\t\t\t{row_txt}")
+        print()
 
     def draw_game(self):
         os.system("cls")
 
         self.draw_player_turn()
         self.draw_matrix_game()
+
+    def draw_rgb(self, msg):
+        rgb_txt = colored(msg, 'yellow') if self.player_turn.value == 1 else colored(msg, 'red')
+        print(f"{rgb_txt}\n")
 
     def gen_matrice(self):
         lst = []
@@ -70,29 +75,25 @@ class NewGame:
         return lst
 
     def add_token(self, token_played):
-        if not token_played.isdigit():
+        if not token_played.isdigit() or not 0 < int(token_played) < self.sizeGame+1:
             print("Valeur incorect !")
-            time.sleep(0.5)
-            return
-        if not 0 < int(token_played) < self.sizeGame+1:
-            print("Valeur incorect !")
-            time.sleep(0.5)
+            time.sleep(1)
             return
 
         token = int(token_played) - 1
 
         for i in range(self.sizeGame):
-            iInv = self.sizeGame-1 - i
+            inv = self.sizeGame - (i + 1)
 
-            if self.matrix_game[iInv][token] == 0:
-                self.matrix_game[iInv][token] = self.player_turn.value
+            if self.matrix_game[inv][token] == 0:
+                self.matrix_game[inv][token] = self.player_turn.value
                 break
-        else: return
+        else:
+            return
 
         self.check_win()
         self.check_end()
-
-        self.player_turn = Player.Player2 if self.player_turn == Player.Player1 else Player.Player1
+        self.switch_player()
 
     def check_win(self):
         def check(result):
@@ -104,7 +105,7 @@ class NewGame:
                 self.run = False
                 self.draw_game()
 
-                self.draw_end(f"{self.player_turn.name} à gagné la partie !")
+                self.draw_rgb(f"{self.player_turn.name} à gagné la partie !")
 
         # check row
         for row in range(self.sizeGame):
@@ -182,17 +183,16 @@ class NewGame:
             if not self.run: break
 
     def check_end(self):
-        for item in self.matrix_game[0]:
-            if item == 0:
+        for token in self.matrix_game[0]:
+            if token == 0:
                 return
 
         self.run = False
         self.draw_game()
-        self.draw_end("Grille pleine !")
+        self.draw_rgb("Grille pleine !")
 
-    def draw_end(self, msg):
-        print(f"""{colored(msg, 'yellow') if self.player_turn.value == 1 else colored(msg, 'red')}
-                """)
+    def switch_player(self):
+        self.player_turn = Player.Player2 if self.player_turn == Player.Player1 else Player.Player1
 
     def start(self):
         self.init_display()
