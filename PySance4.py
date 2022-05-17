@@ -17,6 +17,47 @@ class NewGame:
         self.player_turn = Player.Player1
         self.matrix_game = self.gen_matrice()
 
+    def init_display(self):
+        os.system(f"mode con: cols={38 + (3 * self.sizeGame)} lines={7 + self.sizeGame}")
+
+    def get_header_numbers(self):
+        return ''.join("%02d " % (i + 1) for i in range(self.sizeGame)) if self.sizeGame >= 10 else '  '.join(f"{i + 1}" for i in range(self.sizeGame))
+
+    def draw_player_turn(self):
+        header = self.get_header_numbers()
+
+        txt = f"Tour: {self.player_turn.name}" if self.run else ""
+
+        print(txt)
+        print(f"\t\t\t{header}")
+
+    def draw_matrix_game(self):
+        for i in range(self.sizeGame):
+
+            row_txt = ""
+            for token in self.matrix_game[i]:
+                match token:
+                    case 1:
+                        token_rgb = colored('O', 'yellow')
+                    case 2:
+                        token_rgb = colored('O', 'red')
+                    case 3:
+                        token_rgb = colored('O', 'green', attrs=['bold'])
+                    case 6:
+                        token_rgb = colored('O', 'green', attrs=['bold'])
+                    case _:
+                        token_rgb = " "
+
+                row_txt += f"[{token_rgb}]"
+
+            print(f"\t\t\t{row_txt}")
+
+    def draw_game(self):
+        os.system("cls")
+
+        self.draw_player_turn()
+        self.draw_matrix_game()
+
     def gen_matrice(self):
         lst = []
 
@@ -27,22 +68,6 @@ class NewGame:
                 lst[row].append(0)
 
         return lst
-
-    def draw_game(self):
-        os.system("cls")
-
-        lstIndex = '  '.join(f"{i + 1}" for i in range(self.sizeGame))
-        if self.sizeGame >= 10:
-            lstIndex = ''.join(f"%02d " % (i + 1) for i in range(self.sizeGame))
-
-        print(f"""{f"Tour: {self.player_turn.name}" if self.run else ""}
-
-                    {lstIndex}""")
-
-        for i in range(self.sizeGame):
-            print(f"""                   {''.join(f"[{colored('O', 'yellow') if x == 1 else colored('O', 'red') if x == 2 else colored('O', 'green', attrs=['bold']) if x == 3 else colored('O', 'green', attrs=['bold']) if x == 6 else ' '}]" for x in self.matrix_game[i])}""")
-
-        print("")
 
     def add_token(self, token_played):
         if not token_played.isdigit():
@@ -170,7 +195,7 @@ class NewGame:
                 """)
 
     def start(self):
-        os.system(f"mode con: cols={38 + (3 * self.sizeGame)} lines={7 + self.sizeGame}")
+        self.init_display()
 
         while self.run:
             self.draw_game()
