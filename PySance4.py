@@ -18,7 +18,7 @@ class NewGame:
         self.matrix_game = self.gen_matrice()
 
     def init_display(self):
-        os.system(f"mode con: cols={38 + (3 * self.sizeGame)} lines={7 + self.sizeGame}")
+        os.system(f"mode con: cols={32 + (3 * self.sizeGame)} lines={7 + self.sizeGame}")
 
     def get_header_numbers(self):
         return ''.join("%02d " % (i + 1) for i in range(self.sizeGame)) if self.sizeGame >= 10 else '  '.join(f"{i + 1}" for i in range(self.sizeGame))
@@ -29,7 +29,7 @@ class NewGame:
         txt = self.player_turn.name if self.run else ""
         self.draw_rgb(txt)
 
-        print(f"\t\t\t{header}")
+        print(f"\t\t {header}")
 
     def draw_matrix_game(self):
         for i in range(self.sizeGame):
@@ -50,7 +50,7 @@ class NewGame:
 
                 row_txt += f"[{token_rgb}]"
 
-            print(f"\t\t\t{row_txt}")
+            print(f"\t\t{row_txt}")
         print()
 
     def draw_game(self):
