@@ -21,7 +21,8 @@ class NewGame:
         os.system(f"mode con: cols={32 + (3 * self.sizeGame)} lines={7 + self.sizeGame}")
 
     def get_header_numbers(self):
-        return ''.join("%02d " % (i + 1) for i in range(self.sizeGame)) if self.sizeGame >= 10 else '  '.join(f"{i + 1}" for i in range(self.sizeGame))
+        return ''.join("%02d " % (i + 1) for i in range(self.sizeGame)) if self.sizeGame >= 10 else '  '.join(
+            f"{i + 1}" for i in range(self.sizeGame))
 
     def draw_player_turn(self):
         header = self.get_header_numbers()
@@ -75,7 +76,7 @@ class NewGame:
         return lst
 
     def add_token(self, token_played):
-        if not token_played.isdigit() or not 0 < int(token_played) < self.sizeGame+1:
+        if not token_played.isdigit() or not 0 < int(token_played) < self.sizeGame + 1:
             print("Valeur incorect !")
             time.sleep(1)
             return
@@ -94,12 +95,12 @@ class NewGame:
         self.check_all_win()
         self.check_end()
         self.switch_player()
-        
+
     def win_rgb(self, index_win):
         for i in range(self.tokenWin):
             row, col = index_win[i][0], index_win[i][1]
             self.matrix_game[row][col] = self.player_turn.value * 3
-        
+
     def check_win(self, result, index_win):
         if f"{self.player_turn.value}" * self.tokenWin in result:
             self.win_rgb(index_win)
@@ -133,14 +134,14 @@ class NewGame:
             if not self.run: break
 
         # check diagoCol
-        sizeGameUseful = self.sizeGame-3
+        sizeGameUseful = self.sizeGame - 3
 
         for row in range(sizeGameUseful):
             lst = [[], []]
             index_win = [[], []]
             rowInc = row
 
-            for col in range(self.sizeGame-row):
+            for col in range(self.sizeGame - row):
                 lst[0].append(self.matrix_game[rowInc][col])
                 lst[1].append(self.matrix_game[col][rowInc])
                 rowInc += 1
@@ -166,20 +167,20 @@ class NewGame:
             for col in range(self.sizeGame - row):
                 colInv = self.sizeGame - 1 - col
                 lst[0].append(self.matrix_game[rowInc][colInv])
-                lst[1].append(self.matrix_game[self.sizeGame-1 - colInv][self.sizeGame-1 - rowInc])
+                lst[1].append(self.matrix_game[self.sizeGame - 1 - colInv][self.sizeGame - 1 - rowInc])
                 rowInc += 1
 
             Inv = self.sizeGame - 1
 
             result = ''.join(str(x) for x in lst[1])
             idxCol = result.find(f"{self.player_turn.value}" * self.tokenWin)
-            index_win = [[idxCol + i, (Inv-(row + idxCol)) - i] for i in range(self.tokenWin)]
+            index_win = [[idxCol + i, (Inv - (row + idxCol)) - i] for i in range(self.tokenWin)]
             self.check_win(result, index_win)
             if not self.run: break
 
             result = ''.join(str(x) for x in lst[0])
             idxCol = result.find(f"{self.player_turn.value}" * self.tokenWin)
-            index_win = [[row + idxCol + i, (Inv-idxCol) - i] for i in range(self.tokenWin)]
+            index_win = [[row + idxCol + i, (Inv - idxCol) - i] for i in range(self.tokenWin)]
             self.check_win(result, index_win)
             if not self.run: break
 
@@ -203,6 +204,7 @@ class NewGame:
 
             input_player = input(f"Entrez le numéro d'une colonne (1 - {self.sizeGame}) : ")
             self.add_token(token_played=input_player)
+
 
 run = True
 
